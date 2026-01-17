@@ -158,7 +158,7 @@ export default function HomePage() {
                 </p>
               </div>
               <a
-                href="http://localhost:1234"
+                href="https://nicks-flix-react.netlify.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full text-center px-4 py-3 bg-[#61dafb] text-[#20232a] font-bold hover:opacity-90 transition-opacity"
@@ -189,7 +189,7 @@ export default function HomePage() {
                 </p>
               </div>
               <a
-                href="http://localhost:4200"
+                href="https://nicks-flix-angular.netlify.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full text-center px-4 py-3 bg-[#dd0031] text-white font-bold hover:opacity-90 transition-opacity"
