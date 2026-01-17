@@ -1,0 +1,47 @@
+<div class="register-container">
+  <h2>Register for Nick's Flix (Angular)</h2>
+  <form (ngSubmit)="registerUser()">
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        [(ngModel)]="userData.username"
+        name="username"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        [(ngModel)]="userData.password"
+        name="password"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        [(ngModel)]="userData.Email"
+        name="Email"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="birthday">Birthday:</label>
+      <input
+        type="date"
+        id="birthday"
+        [(ngModel)]="userData.Birthday"
+        name="Birthday"
+        required
+      />
+    </div>
+    <button type="submit">Register</button>
+    <p>Already have an account? <a routerLink="/login">Login here</a></p>
+  </form>
+</div>

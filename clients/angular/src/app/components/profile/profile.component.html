@@ -1,0 +1,35 @@
+<div class="app-container">
+  <nav class="navbar">
+    <h1>Nick's Flix (Angular)</h1>
+    <div class="nav-links">
+      <a routerLink="/movies">Movies</a>
+      <a routerLink="/profile">Profile</a>
+      <button (click)="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="profile-container" *ngIf="user">
+    <h2>User Profile</h2>
+    <div class="profile-info">
+      <p><strong>Username:</strong> {{ user.username || user.Username }}</p>
+      <p><strong>Email:</strong> {{ user.Email }}</p>
+      <p><strong>Birthday:</strong> {{ user.Birthday | date }}</p>
+    </div>
+
+    <h3>My Watchlist</h3>
+    <!-- Added remove button for each watchlist movie -->
+    <div class="watchlist-grid" *ngIf="user.Watchlist && user.Watchlist.length > 0">
+      <div class="movie-card" *ngFor="let movie of user.Watchlist">
+        <img [src]="movie.ImagePath" [alt]="movie.Title" />
+        <div class="movie-info">
+          <h4>{{ movie.Title }}</h4>
+          <p>{{ movie.Director?.Name || 'Unknown' }}</p>
+          <button (click)="removeFromWatchlist(movie._id)" class="btn-remove">
+            Remove from Watchlist
+          </button>
+        </div>
+      </div>
+    </div>
+    <p *ngIf="!user.Watchlist || user.Watchlist.length === 0">No movies in your watchlist yet.</p>
+  </div>
+</div>

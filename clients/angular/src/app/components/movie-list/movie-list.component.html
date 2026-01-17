@@ -1,0 +1,42 @@
+<div class="app-container">
+  <nav class="navbar">
+    <h1>Nick's Flix (Angular)</h1>
+    <div class="nav-links">
+      <a routerLink="/movies">Movies</a>
+      <a routerLink="/profile">Profile</a>
+      <button (click)="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="movies-container">
+    <h2>All Movies</h2>
+    <div class="movies-grid" *ngIf="movies.length > 0">
+      <div class="movie-card" *ngFor="let movie of movies">
+        <img [src]="movie.ImagePath" [alt]="movie.Title" />
+        <div class="movie-info">
+          <h3>{{ movie.Title }}</h3>
+          <p>Director: {{ movie.Director?.Name || 'Unknown' }}</p>
+          <p class="description">{{ movie.Description }}</p>
+          <!-- Added watchlist buttons -->
+          <div class="watchlist-actions">
+            <button 
+              *ngIf="!isInWatchlist(movie._id)" 
+              (click)="addToWatchlist(movie._id)"
+              class="btn-add"
+            >
+              + Add to Watchlist
+            </button>
+            <button 
+              *ngIf="isInWatchlist(movie._id)" 
+              (click)="removeFromWatchlist(movie._id)"
+              class="btn-remove"
+            >
+              ✓ In Watchlist
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p *ngIf="movies.length === 0">Loading movies...</p>
+  </div>
+</div>

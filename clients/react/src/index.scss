@@ -1,0 +1,85 @@
+$primary-color: #e50914;
+$secondary-color: #141414;
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  background-color: #f5f5f5;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  
+  @media (min-width: 768px) {
+    padding: 2rem 2rem;
+  }
+}
+
+// Form and card styling
+.auth-card {
+  max-width: 500px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+// Profile view responsiveness
+.profile-view {
+  max-width: 1200px;
+  margin: 0 auto;
+  
+  .watchlist {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+    
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+  }
+}
+
+// Movie grid responsiveness
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+  
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+.movie-card {
+  transition: transform 0.2s;
+  height: 100%;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+  
+  img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+  }
+}
