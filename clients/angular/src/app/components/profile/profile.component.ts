@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
   loadUserProfile(): void {
     this.userService.getUserProfile().subscribe({
       next: (userData: any) => {
-        console.log("[v0] User profile loaded:", userData);
+        console.log("User profile loaded:", userData);
         this.user = userData;
         localStorage.setItem("user", JSON.stringify(userData));
       },

@@ -19,9 +19,9 @@ export class FetchApiDataService {
   // Handle HTTP errors
   private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.error instanceof ErrorEvent) {
-      console.error("[v0] Client-side error:", error.error.message);
+      console.error("Client-side error:", error.error.message);
     } else {
-      console.error(`[v0] Server error ${error.status}:`, error.error);
+      console.error(`Server error ${error.status}:`, error.error);
     }
     return throwError(
       () => new Error("Something went wrong. Please try again later.")
