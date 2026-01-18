@@ -20,7 +20,7 @@ export class RegisterComponent {
   ) {}
 
   registerUser(): void {
-    console.log("[v0] Attempting registration with:", {
+    console.log("Attempting registration with:", {
       username: this.userData.username,
       Email: this.userData.Email,
       Birthday: this.userData.Birthday,
@@ -28,12 +28,12 @@ export class RegisterComponent {
 
     this.fetchApiData.userRegistration(this.userData).subscribe({
       next: (result: any) => {
-        console.log("[v0] Registration successful:", result);
+        console.log("Registration successful:", result);
         alert("Registration successful! Please log in.");
         this.router.navigate(["/login"]);
       },
       error: (error: any) => {
-        console.error("[v0] Registration error:", error);
+        console.error("Registration error:", error);
         alert("Registration failed. Please try again.");
       },
     });

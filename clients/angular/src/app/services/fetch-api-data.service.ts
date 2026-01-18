@@ -50,9 +50,9 @@ export class FetchApiDataService {
 
   // USER LOGIN
   loginUser(userData: any): Observable<any> {
-    console.log("[v0] Posting to login endpoint:", `${apiUrl}/login`);
+    console.log("Posting to login endpoint:", `${apiUrl}/login`);
     return this.http.post(`${apiUrl}/login`, userData).pipe(
-      tap((response: any) => console.log("[v0] Login response:", response)),
+      tap((response: any) => console.log("Login response:", response)),
       catchError(this.handleError)
     );
   }

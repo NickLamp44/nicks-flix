@@ -20,16 +20,16 @@ export class LoginComponent {
   ) {}
 
   loginUser(): void {
-    console.log("[v0] Attempting login with username:", this.userData.username);
+    console.log("Attempting login with username:", this.userData.username);
     this.fetchApiData.loginUser(this.userData).subscribe({
       next: (result: any) => {
-        console.log("[v0] Login successful, response:", result);
+        console.log("Login successful, response:", result);
         localStorage.setItem("user", JSON.stringify(result.user));
         localStorage.setItem("token", result.token);
         this.router.navigate(["/movies"]);
       },
       error: (error: any) => {
-        console.error("[v0] Login error:", error);
+        console.error("Login error:", error);
         alert("Login failed. Please check your credentials.");
       },
     });
