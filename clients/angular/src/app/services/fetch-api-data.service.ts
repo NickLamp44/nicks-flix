@@ -50,10 +50,29 @@ export class FetchApiDataService {
 
   // USER LOGIN
   loginUser(userData: any): Observable<any> {
-    console.log("Posting to login endpoint:", `${apiUrl}/login`);
-    return this.http.post(`${apiUrl}/login`, userData).pipe(
-      tap((response: any) => console.log("Login response:", response)),
-      catchError(this.handleError)
+    const url = `${apiUrl}/login`;
+    console.log("API URL:", apiUrl);
+    console.log("Full login URL:", url);
+    console.log("Login data:", userData);
+
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json",
+    });
+
+    return this.http.post(url, userData, { headers }).pipe(
+      tap((response: any) => {
+        console.log("Login response:", response);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error("Login error details:", {
+          status: error.status,
+          statusText: error.statusText,
+          message: error.message,
+          error: error.error,
+          url: error.url,
+        });
+        return this.handleError(error);
+      })
     );
   }
 
