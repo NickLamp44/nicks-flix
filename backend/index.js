@@ -37,7 +37,7 @@ app.use(morgan(NODE_ENV === "development" ? "dev" : "combined")) // Logging
 app.use(express.json({ limit: "10mb" }))
 app.use(express.urlencoded({ extended: true, limit: "10mb" }))
 
-// CORS Configuration
+// CORS Configuration 
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -51,8 +51,15 @@ app.use(
       }
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    exposedHeaders: ["Content-Length", "X-Request-Id"],
+    maxAge: 600, // Cache preflight for 10 minutes
   }),
 )
+
+// Explicit OPTIONS handling for all routes
+app.options("*", cors())
 
 // Initialize Passport
 app.use(passport.initialize())

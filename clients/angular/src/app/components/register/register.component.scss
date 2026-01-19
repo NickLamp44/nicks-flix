@@ -56,3 +56,21 @@ a {
   color: #e50914;
   text-decoration: none;
 }
+
+.link-button {
+  width: auto;
+  padding: 0;
+  background: none;
+  color: #e50914;
+  border: none;
+  font-size: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  margin: 0;
+  display: inline;
+}
+
+.link-button:hover {
+  background: none;
+  color: #b20710;
+}
