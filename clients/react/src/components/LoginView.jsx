@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Form, Button, Container, Card } from "react-bootstrap";
 
-const API_URL = process.env.API_URL || "http://localhost:8080";
+const API_URL = process.env.API_URL ;
 
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
