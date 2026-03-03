@@ -50,6 +50,25 @@ const userSchema = mongoose.Schema(
         ref: "Movie",
       },
     ],
+    Ratings: [
+      {
+        movie: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Movie",
+          required: true,
+        },
+        score: {
+          type: Number,
+          required: true,
+          min: 1,
+          max: 5,
+        },
+        ratedAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

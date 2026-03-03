@@ -207,6 +207,91 @@ router.delete(
   }
 );
 
+// Rate a movie (POST creates or updates the rating for that movie)
+router.post(
+  "/:id/ratings/:movieId",
+  passport.authenticate("jwt", { session: false }),
+  [
+    check("score", "Score must be an integer between 1 and 5")
+      .isInt({ min: 1, max: 5 }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    const { id, movieId } = req.params;
+    const { score } = req.body;
+
+    if (req.user._id.toString() !== id) {
+      return res.status(403).json({ message: "Unauthorized to rate on behalf of this user" });
+    }
+
+    try {
+      // Remove any existing rating for this movie then push the new one
+      const updatedUser = await Users.findByIdAndUpdate(
+        id,
+        {
+          $pull: { Ratings: { movie: movieId } },
+        },
+        { new: false }
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const ratedUser = await Users.findByIdAndUpdate(
+        id,
+        {
+          $push: { Ratings: { movie: movieId, score, ratedAt: new Date() } },
+        },
+        { new: true }
+      )
+        .select("-password")
+        .populate("Ratings.movie");
+
+      res.json(ratedUser);
+    } catch (error) {
+      console.error("Error rating movie:", error);
+      res.status(500).json({ message: "Error rating movie", error: error.message });
+    }
+  }
+);
+
+// Remove a rating
+router.delete(
+  "/:id/ratings/:movieId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const { id, movieId } = req.params;
+
+    if (req.user._id.toString() !== id) {
+      return res.status(403).json({ message: "Unauthorized to modify this user's ratings" });
+    }
+
+    try {
+      const updatedUser = await Users.findByIdAndUpdate(
+        id,
+        { $pull: { Ratings: { movie: movieId } } },
+        { new: true }
+      )
+        .select("-password")
+        .populate("Ratings.movie");
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json(updatedUser);
+    } catch (error) {
+      console.error("Error removing rating:", error);
+      res.status(500).json({ message: "Error removing rating", error: error.message });
+    }
+  }
+);
+
 // Add movie to watchlist
 router.post(
   "/:id/watchlist/:movieId",
