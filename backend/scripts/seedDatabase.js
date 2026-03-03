@@ -3,15 +3,14 @@ const mongoose = require("mongoose");
 const { Movie } = require("../models/models");
 
 // ImagePath uses TMDB poster URLs (https://image.tmdb.org/t/p/w500/<poster_path>)
-// so no local image files are required. Re-running this script is safe — it
-// upserts by Title rather than wiping the collection.
+// No local image files required. Re-running is safe — upserts by Title.
 
 const movies = [
-  // ── Marvel Cinematic Universe ──────────────────────────────────────────────
+
+  // ── Marvel Cinematic Universe (Phase 1–5) ────────────────────────────────
   {
     Title: "Iron Man",
-    Description:
-      "After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.",
+    Description: "After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.",
     Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
     Director: { Name: "Jon Favreau", Bio: "American actor and filmmaker." },
     Actors: ["Robert Downey Jr.", "Jeff Bridges", "Gwyneth Paltrow"],
@@ -19,9 +18,44 @@ const movies = [
     Featured: true,
   },
   {
+    Title: "The Incredible Hulk",
+    Description: "Bruce Banner, a scientist on the run from the U.S. Government, must find a cure for the monster he emerges whenever he loses his temper.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Louis Leterrier", Bio: "French filmmaker." },
+    Actors: ["Edward Norton", "Liv Tyler", "Tim Roth"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/gLFzWXS5XUkUFjAsMqj2CqQhpOd.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Iron Man 2",
+    Description: "With the world now aware of his identity as Iron Man, Tony Stark must contend with both his declining health and a vengeful mad man with ties to his father's legacy.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Jon Favreau", Bio: "American actor and filmmaker." },
+    Actors: ["Robert Downey Jr.", "Mickey Rourke", "Gwyneth Paltrow"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/6WBeq4tCgG45MnIX6PiY5gKoJaV.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Thor",
+    Description: "The powerful but arrogant god Thor is cast out of Asgard to live amongst humans in Midgard, where he soon becomes one of their finest defenders.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Kenneth Branagh", Bio: "British actor and filmmaker." },
+    Actors: ["Chris Hemsworth", "Natalie Portman", "Tom Hiddleston"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/prSfAi1xGrhLQNxVSUFh2xMaYEO.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Captain America: The First Avenger",
+    Description: "Steve Rogers, a rejected military soldier, transforms into Captain America after taking a dose of a Super-Soldier serum. But being Captain America comes at a price.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Joe Johnston", Bio: "American filmmaker." },
+    Actors: ["Chris Evans", "Hugo Weaving", "Hayley Atwell"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/vSNxpHkTpjzHQFIjX6T7bIi4rD5.jpg",
+    Featured: false,
+  },
+  {
     Title: "The Avengers",
-    Description:
-      "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki from enslaving humanity with the aid of the tesseract.",
+    Description: "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki from enslaving humanity.",
     Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
     Director: { Name: "Joss Whedon", Bio: "American screenwriter and filmmaker." },
     Actors: ["Robert Downey Jr.", "Chris Evans", "Scarlett Johansson"],
@@ -29,9 +63,116 @@ const movies = [
     Featured: true,
   },
   {
+    Title: "Iron Man 3",
+    Description: "When Tony Stark's world is torn apart by a formidable terrorist called the Mandarin, he starts an odyssey of rebuilding and retribution.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Shane Black", Bio: "American filmmaker." },
+    Actors: ["Robert Downey Jr.", "Gwyneth Paltrow", "Ben Kingsley"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/qhRex189iu6QFhJCkJPwi2G8TqM.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Thor: The Dark World",
+    Description: "When the Dark Elves attempt to plunge the universe into darkness, Thor must embark on a perilous and personal journey that reunites him with doctor Jane Foster.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Alan Taylor", Bio: "American filmmaker." },
+    Actors: ["Chris Hemsworth", "Natalie Portman", "Tom Hiddleston"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/bnX5PqConnz4iS8lDFBqQANEfap.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Captain America: The Winter Soldier",
+    Description: "As Steve Rogers struggles to embrace his role in the modern world, he teams up with Black Widow to battle a new threat from old history.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Anthony Russo", Bio: "American filmmaker." },
+    Actors: ["Chris Evans", "Scarlett Johansson", "Samuel L. Jackson"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/5TQ6JkKGMN1ynVYteHAUFMDRNhz.jpg",
+    Featured: true,
+  },
+  {
+    Title: "Guardians of the Galaxy",
+    Description: "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "James Gunn", Bio: "American filmmaker." },
+    Actors: ["Chris Pratt", "Zoe Saldana", "Dave Bautista"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg",
+    Featured: true,
+  },
+  {
+    Title: "Avengers: Age of Ultron",
+    Description: "When Tony Stark and Bruce Banner try to jump-start a dormant peacekeeping program called Ultron, things go horribly wrong and Earth's mightiest heroes are put to the ultimate test.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Joss Whedon", Bio: "American screenwriter and filmmaker." },
+    Actors: ["Robert Downey Jr.", "Chris Evans", "Mark Ruffalo"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/t90Y3G8UGQp0f0DrP60wRu9fozX.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Ant-Man",
+    Description: "Armed with a super-suit with the astonishing ability to shrink in scale but increase in strength, cat burglar Scott Lang must embrace his inner hero.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Peyton Reed", Bio: "American filmmaker." },
+    Actors: ["Paul Rudd", "Michael Douglas", "Evangeline Lilly"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/kMRVN0K9ddWFbBFLzCJFzHBmAlw.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Captain America: Civil War",
+    Description: "Political involvement in the Avengers' affairs causes a rift between Captain America and Iron Man.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Anthony Russo", Bio: "American filmmaker." },
+    Actors: ["Chris Evans", "Robert Downey Jr.", "Scarlett Johansson"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/rAGiXaUfDiyHtEp5iOCPDMrNqzm.jpg",
+    Featured: true,
+  },
+  {
+    Title: "Doctor Strange",
+    Description: "A former neurosurgeon embarks on a journey of healing only to be drawn into the world of the mystic arts.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Scott Derrickson", Bio: "American filmmaker." },
+    Actors: ["Benedict Cumberbatch", "Chiwetel Ejiofor", "Rachel McAdams"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/uGBVAWjjA55V6UJune/Doctor-Strange.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Guardians of the Galaxy Vol. 2",
+    Description: "The Guardians struggle to keep together as a team while dealing with their personal family issues, notably Star-Lord's encounter with his father.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "James Gunn", Bio: "American filmmaker." },
+    Actors: ["Chris Pratt", "Zoe Saldana", "Dave Bautista"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/y4MBh0EjBlMuOzv9axM4eW9GFOH.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Spider-Man: Homecoming",
+    Description: "Peter Parker balances his life as an ordinary high school student in Queens with his superhero alter-ego Spider-Man.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Jon Watts", Bio: "American filmmaker." },
+    Actors: ["Tom Holland", "Michael Keaton", "Robert Downey Jr."],
+    ImagePath: "https://image.tmdb.org/t/p/w500/c24sv2weTHPsmDa7jEMN0kzOkm8.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Thor: Ragnarok",
+    Description: "Thor is imprisoned on the planet Sakaar, and must race against time to return to Asgard and stop Ragnarök.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Taika Waititi", Bio: "New Zealand filmmaker." },
+    Actors: ["Chris Hemsworth", "Tom Hiddleston", "Cate Blanchett"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/rzRwTcFvttcN1ZpX2xv4j3tSdJu.jpg",
+    Featured: true,
+  },
+  {
+    Title: "Black Panther",
+    Description: "T'Challa, heir to the hidden but advanced kingdom of Wakanda, must step forward to lead his people into a new future.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Ryan Coogler", Bio: "American filmmaker." },
+    Actors: ["Chadwick Boseman", "Michael B. Jordan", "Lupita Nyong'o"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
+    Featured: true,
+  },
+  {
     Title: "Avengers: Infinity War",
-    Description:
-      "The Avengers and their allies must be willing to sacrifice all in an attempt to defeat the powerful Thanos before his blitz of devastation and ruin puts an end to the universe.",
+    Description: "The Avengers and their allies must be willing to sacrifice all in an attempt to defeat the powerful Thanos before his blitz of devastation and ruin puts an end to the universe.",
     Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
     Director: { Name: "Anthony Russo", Bio: "American filmmaker." },
     Actors: ["Robert Downey Jr.", "Chris Hemsworth", "Josh Brolin"],
@@ -39,9 +180,17 @@ const movies = [
     Featured: true,
   },
   {
+    Title: "Ant-Man and the Wasp",
+    Description: "As Scott Lang balances being both a superhero and a father, Hope van Dyne and Dr. Hank Pym present an urgent new mission.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Peyton Reed", Bio: "American filmmaker." },
+    Actors: ["Paul Rudd", "Evangeline Lilly", "Michael Douglas"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/9iP1pyJitTbQk6qumXjGE15rRuF.jpg",
+    Featured: false,
+  },
+  {
     Title: "Avengers: Endgame",
-    Description:
-      "After the devastating events of Infinity War, the universe is in ruins. The Avengers assemble once more to reverse Thanos's actions and restore balance.",
+    Description: "After the devastating events of Infinity War, the universe is in ruins. The Avengers assemble once more to reverse Thanos's actions and restore balance.",
     Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
     Director: { Name: "Anthony Russo", Bio: "American filmmaker." },
     Actors: ["Robert Downey Jr.", "Chris Evans", "Mark Ruffalo"],
@@ -49,21 +198,91 @@ const movies = [
     Featured: true,
   },
   {
-    Title: "Black Panther",
-    Description:
-      "T'Challa, heir to the hidden but advanced kingdom of Wakanda, must step forward to lead his people into a new future and must confront a challenger from his country's past.",
+    Title: "Spider-Man: Far From Home",
+    Description: "Following the events of Avengers: Endgame, Spider-Man must step up to take on new threats in a world that has changed forever.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Jon Watts", Bio: "American filmmaker." },
+    Actors: ["Tom Holland", "Samuel L. Jackson", "Zendaya"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/lcq8dVxeeOqHvvgcte707K0KjDf.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Black Widow",
+    Description: "Natasha Romanoff confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Cate Shortland", Bio: "Australian filmmaker." },
+    Actors: ["Scarlett Johansson", "Florence Pugh", "David Harbour"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/qAZ0pzat24kLdO3o8ejmbLxyOac.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Shang-Chi and the Legend of the Ten Rings",
+    Description: "Shang-Chi must confront the past he thought he left behind when he is drawn into the web of the mysterious Ten Rings organization.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Destin Daniel Cretton", Bio: "American filmmaker." },
+    Actors: ["Simu Liu", "Tony Leung", "Awkwafina"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/1BIoJGKbXjdFDAqUEiA2VHqkK1Z.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Eternals",
+    Description: "The saga of the Eternals, a race of immortal beings who lived on Earth and shaped its history and civilizations.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Chloé Zhao", Bio: "Chinese-American filmmaker." },
+    Actors: ["Gemma Chan", "Richard Madden", "Angelina Jolie"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/bcCBq9N1EMo3daNbbe1TXKieJly.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Spider-Man: No Way Home",
+    Description: "With Spider-Man's identity now revealed, Peter Parker asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Jon Watts", Bio: "American filmmaker." },
+    Actors: ["Tom Holland", "Zendaya", "Benedict Cumberbatch"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+    Featured: true,
+  },
+  {
+    Title: "Doctor Strange in the Multiverse of Madness",
+    Description: "Doctor Strange teams up with a mysterious Chavez to travel the Multiverse and face a powerful adversary determined to obtain Chavez's power.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Sam Raimi", Bio: "American filmmaker." },
+    Actors: ["Benedict Cumberbatch", "Elizabeth Olsen", "Rachel McAdams"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Thor: Love and Thunder",
+    Description: "Thor enlists the help of Valkyrie, Korg and ex-girlfriend Jane Foster to fight Gorr the God Butcher, who intends to make the gods extinct.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Taika Waititi", Bio: "New Zealand filmmaker." },
+    Actors: ["Chris Hemsworth", "Natalie Portman", "Christian Bale"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/pIkRyD18kl4FhoCNQuWxWu5cBLM.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Black Panther: Wakanda Forever",
+    Description: "The people of Wakanda fight to protect their home from intervening world powers as they mourn the death of King T'Challa.",
     Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
     Director: { Name: "Ryan Coogler", Bio: "American filmmaker." },
-    Actors: ["Chadwick Boseman", "Michael B. Jordan", "Lupita Nyong'o"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
-    Featured: true,
+    Actors: ["Letitia Wright", "Lupita Nyong'o", "Danai Gurira"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/sv1xJUazXoQuIDTIL6rLMGE8Nez.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Guardians of the Galaxy Vol. 3",
+    Description: "Still reeling from the loss of Gamora, Peter Quill must rally his team around him to defend the universe and protect one of their own.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "James Gunn", Bio: "American filmmaker." },
+    Actors: ["Chris Pratt", "Zoe Saldana", "Dave Bautista"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg",
+    Featured: false,
   },
 
   // ── The Dark Knight Trilogy ────────────────────────────────────────────────
   {
     Title: "Batman Begins",
-    Description:
-      "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption.",
+    Description: "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption.",
     Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
     Director: { Name: "Christopher Nolan", Bio: "British-American filmmaker." },
     Actors: ["Christian Bale", "Liam Neeson", "Katie Holmes"],
@@ -72,8 +291,7 @@ const movies = [
   },
   {
     Title: "The Dark Knight",
-    Description:
-      "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+    Description: "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
     Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
     Director: { Name: "Christopher Nolan", Bio: "British-American filmmaker." },
     Actors: ["Christian Bale", "Heath Ledger", "Aaron Eckhart"],
@@ -82,8 +300,7 @@ const movies = [
   },
   {
     Title: "The Dark Knight Rises",
-    Description:
-      "Eight years after the Joker's reign of anarchy, Batman is forced from his exile to defend Gotham City from the brutal guerrilla terrorist Bane.",
+    Description: "Eight years after the Joker's reign of anarchy, Batman is forced from his exile to defend Gotham City from the brutal guerrilla terrorist Bane.",
     Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
     Director: { Name: "Christopher Nolan", Bio: "British-American filmmaker." },
     Actors: ["Christian Bale", "Tom Hardy", "Anne Hathaway"],
@@ -91,11 +308,37 @@ const movies = [
     Featured: false,
   },
 
-  // ── Star Wars ──────────────────────────────────────────────────────────────
+  // ── Star Wars (Skywalker Saga + Spinoffs) ─────────────────────────────────
+  {
+    Title: "Star Wars: The Phantom Menace",
+    Description: "Two Jedi Knights escape a hostile blockade to find allies and come across a young boy who may bring balance to the Force, but the long dormant Sith resurface to claim their old glory.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "George Lucas", Bio: "American filmmaker and entrepreneur." },
+    Actors: ["Liam Neeson", "Ewan McGregor", "Natalie Portman"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/6wkfovpn7Eq8dYNKaG5PY3q2oq6.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Star Wars: Attack of the Clones",
+    Description: "Ten years after initially meeting, Anakin Skywalker shares a forbidden romance with Padmé Amidala while Obi-Wan Kenobi investigates an assassination attempt on the senator.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "George Lucas", Bio: "American filmmaker and entrepreneur." },
+    Actors: ["Ewan McGregor", "Natalie Portman", "Hayden Christensen"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/56sblWpBCfBjS62g5omRRCnKNSe.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Star Wars: Revenge of the Sith",
+    Description: "As the war between the Jedi and Separatists comes to an end, Anakin Skywalker is seduced by the dark side of the Force to become the Sith lord Darth Vader.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "George Lucas", Bio: "American filmmaker and entrepreneur." },
+    Actors: ["Ewan McGregor", "Hayden Christensen", "Natalie Portman"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/9PEPcTrHMSjDSqMVBEiDNNYfQ34.jpg",
+    Featured: false,
+  },
   {
     Title: "Star Wars: A New Hope",
-    Description:
-      "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee, and two droids to save the galaxy from the Empire's world-destroying battle station.",
+    Description: "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee, and two droids to save the galaxy from the Empire's world-destroying battle station.",
     Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
     Director: { Name: "George Lucas", Bio: "American filmmaker and entrepreneur." },
     Actors: ["Mark Hamill", "Harrison Ford", "Carrie Fisher"],
@@ -104,8 +347,7 @@ const movies = [
   },
   {
     Title: "Star Wars: The Empire Strikes Back",
-    Description:
-      "After the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke Skywalker begins Jedi training with Yoda.",
+    Description: "After the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke Skywalker begins Jedi training with Yoda.",
     Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
     Director: { Name: "Irvin Kershner", Bio: "American film director." },
     Actors: ["Mark Hamill", "Harrison Ford", "Carrie Fisher"],
@@ -113,9 +355,17 @@ const movies = [
     Featured: true,
   },
   {
+    Title: "Star Wars: Return of the Jedi",
+    Description: "After a daring mission to rescue Han Solo from Jabba the Hutt, the Rebels dispatch to Endor to destroy the second Death Star.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Richard Marquand", Bio: "Welsh filmmaker." },
+    Actors: ["Mark Hamill", "Harrison Ford", "Carrie Fisher"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/mDCBQNhR6R0PVFucJlU3CGHMFXG.jpg",
+    Featured: false,
+  },
+  {
     Title: "Star Wars: The Force Awakens",
-    Description:
-      "As a new threat to the galaxy rises, Rey, a desert scavenger, and Finn, an ex-stormtrooper, must join Han Solo and Chewbacca to search for the one hope of restoring peace.",
+    Description: "As a new threat to the galaxy rises, Rey, a desert scavenger, and Finn, an ex-stormtrooper, must join Han Solo and Chewbacca to search for the one hope of restoring peace.",
     Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
     Director: { Name: "J.J. Abrams", Bio: "American filmmaker and producer." },
     Actors: ["Daisy Ridley", "John Boyega", "Oscar Isaac"],
@@ -124,20 +374,45 @@ const movies = [
   },
   {
     Title: "Rogue One: A Star Wars Story",
-    Description:
-      "The daughter of an Imperial scientist joins a motley crew of rebels on a mission to steal the plans for the Death Star.",
+    Description: "The daughter of an Imperial scientist joins a motley crew of rebels on a mission to steal the plans for the Death Star.",
     Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
     Director: { Name: "Gareth Edwards", Bio: "British filmmaker." },
     Actors: ["Felicity Jones", "Diego Luna", "Ben Mendelsohn"],
     ImagePath: "https://image.tmdb.org/t/p/w500/i0yw1mFbB7sNGHCs7EXZPzFkdA1.jpg",
     Featured: false,
   },
+  {
+    Title: "Star Wars: The Last Jedi",
+    Description: "Rey develops her newly discovered abilities with the guidance of Luke Skywalker, who is unsettled by the strength of her powers.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Rian Johnson", Bio: "American filmmaker." },
+    Actors: ["Daisy Ridley", "John Boyega", "Mark Hamill"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/kOVEVeg59E0wsnXmF9nrh6OmWII.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Solo: A Star Wars Story",
+    Description: "During an adventure into a dark criminal underworld, Han Solo meets his mighty future co-pilot Chewbacca and encounters the notorious gambler Lando Calrissian.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Ron Howard", Bio: "American filmmaker." },
+    Actors: ["Alden Ehrenreich", "Woody Harrelson", "Emilia Clarke"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/3oAa8mJJ97CH9AeGEY6vjAxqcvZ.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Star Wars: The Rise of Skywalker",
+    Description: "The surviving Resistance faces the First Order once more as Rey, Finn and Poe Dameron's journey continues.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "J.J. Abrams", Bio: "American filmmaker and producer." },
+    Actors: ["Daisy Ridley", "Adam Driver", "John Boyega"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/db32LaOibwEliAmSL2jjDF6oDdj.jpg",
+    Featured: false,
+  },
 
   // ── The Lord of the Rings ──────────────────────────────────────────────────
   {
     Title: "The Lord of the Rings: The Fellowship of the Ring",
-    Description:
-      "A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth.",
+    Description: "A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.",
     Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
     Director: { Name: "Peter Jackson", Bio: "New Zealand filmmaker." },
     Actors: ["Elijah Wood", "Ian McKellen", "Orlando Bloom"],
@@ -146,8 +421,7 @@ const movies = [
   },
   {
     Title: "The Lord of the Rings: The Two Towers",
-    Description:
-      "While Frodo and Samwise edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally.",
+    Description: "While Frodo and Samwise edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman.",
     Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
     Director: { Name: "Peter Jackson", Bio: "New Zealand filmmaker." },
     Actors: ["Elijah Wood", "Ian McKellen", "Viggo Mortensen"],
@@ -156,8 +430,7 @@ const movies = [
   },
   {
     Title: "The Lord of the Rings: The Return of the King",
-    Description:
-      "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
+    Description: "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
     Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
     Director: { Name: "Peter Jackson", Bio: "New Zealand filmmaker." },
     Actors: ["Elijah Wood", "Viggo Mortensen", "Ian McKellen"],
@@ -165,11 +438,39 @@ const movies = [
     Featured: true,
   },
 
-  // ── Harry Potter ──────────────────────────────────────────────────────────
+  // ── The Hobbit Trilogy ────────────────────────────────────────────────────
+  {
+    Title: "The Hobbit: An Unexpected Journey",
+    Description: "A reluctant Hobbit, Bilbo Baggins, sets out to the Lonely Mountain with a spirited group of dwarves to reclaim their mountain home — and the gold within it — from the dragon Smaug.",
+    Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
+    Director: { Name: "Peter Jackson", Bio: "New Zealand filmmaker." },
+    Actors: ["Martin Freeman", "Ian McKellen", "Richard Armitage"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/xSCk04vvTuISzPHdXeJ3eknptUO.jpg",
+    Featured: false,
+  },
+  {
+    Title: "The Hobbit: The Desolation of Smaug",
+    Description: "The dwarves, along with Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim Erebor from Smaug.",
+    Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
+    Director: { Name: "Peter Jackson", Bio: "New Zealand filmmaker." },
+    Actors: ["Martin Freeman", "Ian McKellen", "Richard Armitage"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/xT98tLqatZPQApZTGLFFSHDzuXM.jpg",
+    Featured: false,
+  },
+  {
+    Title: "The Hobbit: The Battle of the Five Armies",
+    Description: "Bilbo and Company are forced to engage in a war against an array of combatants and keep the Lonely Mountain from falling into the hands of a rising darkness.",
+    Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
+    Director: { Name: "Peter Jackson", Bio: "New Zealand filmmaker." },
+    Actors: ["Martin Freeman", "Ian McKellen", "Richard Armitage"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/jF3OtKLFO8bEIHMFsWs7QlRTenw.jpg",
+    Featured: false,
+  },
+
+  // ── Harry Potter (All 8) ──────────────────────────────────────────────────
   {
     Title: "Harry Potter and the Sorcerer's Stone",
-    Description:
-      "An orphaned boy discovers he is a wizard and enrolls in Hogwarts School of Witchcraft and Wizardry.",
+    Description: "An orphaned boy discovers he is a wizard and enrolls in Hogwarts School of Witchcraft and Wizardry, where he learns the truth about his parents' death.",
     Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
     Director: { Name: "Chris Columbus", Bio: "American filmmaker." },
     Actors: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
@@ -177,9 +478,17 @@ const movies = [
     Featured: false,
   },
   {
+    Title: "Harry Potter and the Chamber of Secrets",
+    Description: "An ancient prophecy seems to be coming true when a mysterious presence begins stalking the corridors of a school of magic and leaving its victims paralyzed.",
+    Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
+    Director: { Name: "Chris Columbus", Bio: "American filmmaker." },
+    Actors: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/sdEExFivaiGMTCDVWIYnHs6XvVT.jpg",
+    Featured: false,
+  },
+  {
     Title: "Harry Potter and the Prisoner of Azkaban",
-    Description:
-      "It's Harry's third year at Hogwarts; not only does he have a new Defense Against the Dark Arts teacher, but there is also trouble brewing.",
+    Description: "It's Harry's third year at Hogwarts; not only does he have a new Defense Against the Dark Arts teacher, but there is also trouble brewing as an escaped prisoner is on the loose.",
     Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
     Director: { Name: "Alfonso Cuarón", Bio: "Mexican filmmaker." },
     Actors: ["Daniel Radcliffe", "Emma Watson", "Gary Oldman"],
@@ -187,9 +496,44 @@ const movies = [
     Featured: false,
   },
   {
+    Title: "Harry Potter and the Goblet of Fire",
+    Description: "Harry Potter finds himself mysteriously selected as an underage competitor in a treacherous tournament between three schools of magic.",
+    Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
+    Director: { Name: "Mike Newell", Bio: "British filmmaker." },
+    Actors: ["Daniel Radcliffe", "Emma Watson", "Robert Pattinson"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/fECBqHkznvFCmn0aaLZJnNSNOXB.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Harry Potter and the Order of the Phoenix",
+    Description: "With their warning about Lord Voldemort's return scoffed at, Harry and Dumbledore are targeted by the Ministry of Magic and Harry forms a student defence group.",
+    Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
+    Director: { Name: "David Yates", Bio: "British filmmaker." },
+    Actors: ["Daniel Radcliffe", "Emma Watson", "Imelda Staunton"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/5aOyriWBkHkMGXCIeW0jDCkqKQg.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Harry Potter and the Half-Blood Prince",
+    Description: "As Harry Potter begins his sixth year at Hogwarts, he discovers an old book marked as the property of the Half-Blood Prince and begins to learn more about Voldemort's dark past.",
+    Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
+    Director: { Name: "David Yates", Bio: "British filmmaker." },
+    Actors: ["Daniel Radcliffe", "Emma Watson", "Jim Broadbent"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/z1MV0EOzxBCXe2JJ0OGXMJ0OVIL.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Harry Potter and the Deathly Hallows: Part 1",
+    Description: "As Harry, Ron, and Hermione race against time and evil to destroy the Horcruxes, they uncover the existence of the three most powerful objects in the wizarding world.",
+    Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
+    Director: { Name: "David Yates", Bio: "British filmmaker." },
+    Actors: ["Daniel Radcliffe", "Emma Watson", "Rupert Grint"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/maP4MTfPCeVD2FZnKBPMpBgr0Ug.jpg",
+    Featured: false,
+  },
+  {
     Title: "Harry Potter and the Deathly Hallows: Part 2",
-    Description:
-      "Harry, Ron, and Hermione search for Voldemort's remaining Horcruxes in their effort to destroy the Dark Lord.",
+    Description: "Harry, Ron, and Hermione search for Voldemort's remaining Horcruxes in their effort to destroy the Dark Lord as the battle for Hogwarts begins.",
     Genre: { Name: "Fantasy", Description: "Films set in imaginary worlds with magic and myth." },
     Director: { Name: "David Yates", Bio: "British filmmaker." },
     Actors: ["Daniel Radcliffe", "Emma Watson", "Ralph Fiennes"],
@@ -197,119 +541,48 @@ const movies = [
     Featured: true,
   },
 
-  // ── Mission: Impossible ───────────────────────────────────────────────────
+  // ── Indiana Jones (All 4) ─────────────────────────────────────────────────
   {
-    Title: "Mission: Impossible – Fallout",
-    Description:
-      "Ethan Hunt and his IMF team race against time to prevent a global catastrophe after a mission gone wrong.",
-    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
-    Director: { Name: "Christopher McQuarrie", Bio: "American filmmaker." },
-    Actors: ["Tom Cruise", "Henry Cavill", "Ving Rhames"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/AkJQpZp9WoNdj7pLYSj1L0RcMMN.jpg",
+    Title: "Raiders of the Lost Ark",
+    Description: "In 1936, archaeologist and adventurer Indiana Jones is hired by the U.S. government to find the Ark of the Covenant before the Nazis.",
+    Genre: { Name: "Adventure", Description: "Films driven by exploration, discovery, and excitement." },
+    Director: { Name: "Steven Spielberg", Bio: "American filmmaker and producer." },
+    Actors: ["Harrison Ford", "Karen Allen", "Paul Freeman"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/ceG9VzoRAVGwivFU403Wc3AHRys.jpg",
     Featured: true,
   },
   {
-    Title: "Mission: Impossible – Ghost Protocol",
-    Description:
-      "The IMF is shut down when it's implicated in the bombing of the Kremlin, causing Ethan Hunt and his new team to go rogue.",
-    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
-    Director: { Name: "Brad Bird", Bio: "American filmmaker and animator." },
-    Actors: ["Tom Cruise", "Jeremy Renner", "Simon Pegg"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/s5V5bCdJMGJLmBLCsECTRJecGPj.jpg",
+    Title: "Indiana Jones and the Temple of Doom",
+    Description: "After arriving in India, Indiana Jones is asked by a desperate village to find a mystical stone and rescue children from a Thugee cult.",
+    Genre: { Name: "Adventure", Description: "Films driven by exploration, discovery, and excitement." },
+    Director: { Name: "Steven Spielberg", Bio: "American filmmaker and producer." },
+    Actors: ["Harrison Ford", "Kate Capshaw", "Jonathan Ke Quan"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/pqxMqTEgc5FwJAXeaFZdBDzRYJA.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Indiana Jones and the Last Crusade",
+    Description: "In 1938, after his father goes missing while pursuing the Holy Grail, Indiana Jones must find him and prevent the Grail from falling into Nazi hands.",
+    Genre: { Name: "Adventure", Description: "Films driven by exploration, discovery, and excitement." },
+    Director: { Name: "Steven Spielberg", Bio: "American filmmaker and producer." },
+    Actors: ["Harrison Ford", "Sean Connery", "Alison Doody"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/4ZDkPxWNOqFRBMcBHRplNlXt5KR.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Indiana Jones and the Kingdom of the Crystal Skull",
+    Description: "In 1957, Indiana Jones is thrust back in action, venturing into the jungles of South America to battle Soviet agents after a mysterious crystal skull.",
+    Genre: { Name: "Adventure", Description: "Films driven by exploration, discovery, and excitement." },
+    Director: { Name: "Steven Spielberg", Bio: "American filmmaker and producer." },
+    Actors: ["Harrison Ford", "Cate Blanchett", "Shia LaBeouf"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/7ZCPFLlDXL49bIhcXVXJdBW9AzQ.jpg",
     Featured: false,
   },
 
-  // ── James Bond ────────────────────────────────────────────────────────────
-  {
-    Title: "Casino Royale",
-    Description:
-      "Armed with a licence to kill, secret agent James Bond sets out on his first mission as 007, where he must defeat a private banker funding terrorists.",
-    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
-    Director: { Name: "Martin Campbell", Bio: "New Zealand filmmaker." },
-    Actors: ["Daniel Craig", "Judi Dench", "Eva Green"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/oEQLlqvvZFDOFahYTfzu1d3GPbP.jpg",
-    Featured: true,
-  },
-  {
-    Title: "Skyfall",
-    Description:
-      "Bond's loyalty to M is tested when her past comes back to haunt her, as MI6 comes under attack.",
-    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
-    Director: { Name: "Sam Mendes", Bio: "British filmmaker." },
-    Actors: ["Daniel Craig", "Javier Bardem", "Judi Dench"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/xa2fPUMGfPYmQxnFnzJGHMB0UAT.jpg",
-    Featured: true,
-  },
-  {
-    Title: "GoldenEye",
-    Description:
-      "James Bond teams up with the lone survivor of a destroyed Russian research center to stop the hijacking of a nuclear space weapon.",
-    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
-    Director: { Name: "Martin Campbell", Bio: "New Zealand filmmaker." },
-    Actors: ["Pierce Brosnan", "Sean Bean", "Judi Dench"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/balmjCTAGFHOFBHkIEzVCRLrmXd.jpg",
-    Featured: false,
-  },
-
-  // ── Fast & Furious ────────────────────────────────────────────────────────
-  {
-    Title: "The Fast and the Furious",
-    Description:
-      "Los Angeles police officer Brian O'Conner must decide where his loyalties lie when he becomes enamored with the underground world of street racing.",
-    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
-    Director: { Name: "Rob Cohen", Bio: "American filmmaker." },
-    Actors: ["Vin Diesel", "Paul Walker", "Jordana Brewster"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/ugkCRBSFECFbALkYAHn7sU3XZDW.jpg",
-    Featured: false,
-  },
-  {
-    Title: "Furious 7",
-    Description:
-      "Deckard Shaw seeks revenge against Dominic Toretto and his family for his comatose brother.",
-    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
-    Director: { Name: "James Wan", Bio: "Australian filmmaker." },
-    Actors: ["Vin Diesel", "Paul Walker", "Jason Statham"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/dPaHqmHHTmhsHbNJiIXZ9Nl6Gum.jpg",
-    Featured: false,
-  },
-
-  // ── John Wick ─────────────────────────────────────────────────────────────
-  {
-    Title: "John Wick",
-    Description:
-      "An ex-hitman comes out of retirement to track down the gangsters that took everything from him.",
-    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
-    Director: { Name: "Chad Stahelski", Bio: "American stuntman and filmmaker." },
-    Actors: ["Keanu Reeves", "Michael Nyqvist", "Alfie Allen"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/fZPSd91yGE9fCcCe6OoQr6E3Bev.jpg",
-    Featured: true,
-  },
-  {
-    Title: "John Wick: Chapter 2",
-    Description:
-      "After returning to the criminal underworld to repay a debt, John Wick discovers that a large bounty has been put on his life.",
-    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
-    Director: { Name: "Chad Stahelski", Bio: "American stuntman and filmmaker." },
-    Actors: ["Keanu Reeves", "Riccardo Scamarcio", "Ian McShane"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/hXWBc0ioZP3cN4zCu6sqbeFdUCF.jpg",
-    Featured: false,
-  },
-  {
-    Title: "John Wick: Chapter 3 – Parabellum",
-    Description:
-      "Super-assassin John Wick is on the run after killing a member of the international assassins' guild, and with a $14 million bounty on his head.",
-    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
-    Director: { Name: "Chad Stahelski", Bio: "American stuntman and filmmaker." },
-    Actors: ["Keanu Reeves", "Halle Berry", "Ian McShane"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/ziEuG1essDuWuC5lpWUaw1uXY2O.jpg",
-    Featured: false,
-  },
-
-  // ── The Matrix ────────────────────────────────────────────────────────────
+  // ── The Matrix Trilogy ────────────────────────────────────────────────────
   {
     Title: "The Matrix",
-    Description:
-      "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+    Description: "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
     Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
     Director: { Name: "Lana Wachowski", Bio: "American filmmaker." },
     Actors: ["Keanu Reeves", "Laurence Fishburne", "Carrie-Anne Moss"],
@@ -318,108 +591,65 @@ const movies = [
   },
   {
     Title: "The Matrix Reloaded",
-    Description:
-      "Freedom fighters Neo, Trinity, and Morpheus lead the revolt against the Machine Army, unlocking the door to the Oracle, the Keymaker and Zion.",
+    Description: "Freedom fighters Neo, Trinity, and Morpheus lead the revolt against the Machine Army, unlocking the door to the Oracle, the Keymaker and Zion.",
     Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
     Director: { Name: "Lana Wachowski", Bio: "American filmmaker." },
     Actors: ["Keanu Reeves", "Laurence Fishburne", "Hugo Weaving"],
     ImagePath: "https://image.tmdb.org/t/p/w500/9TBe3J3d5VLQfOxAsWrOneKBJhQ.jpg",
     Featured: false,
   },
-
-  // ── Indiana Jones ─────────────────────────────────────────────────────────
   {
-    Title: "Raiders of the Lost Ark",
-    Description:
-      "In 1936, archaeologist and adventurer Indiana Jones is hired by the U.S. government to find the Ark of the Covenant before the Nazis.",
-    Genre: { Name: "Adventure", Description: "Films driven by exploration, discovery, and excitement." },
-    Director: { Name: "Steven Spielberg", Bio: "American filmmaker and producer." },
-    Actors: ["Harrison Ford", "Karen Allen", "Paul Freeman"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/ceG9VzoRAVGwivFU403Wc3AHRys.jpg",
-    Featured: true,
-  },
-  {
-    Title: "Indiana Jones and the Last Crusade",
-    Description:
-      "In 1938, after his father goes missing while pursuing the Holy Grail, Indiana Jones must find him and prevent the Grail from falling into Nazi hands.",
-    Genre: { Name: "Adventure", Description: "Films driven by exploration, discovery, and excitement." },
-    Director: { Name: "Steven Spielberg", Bio: "American filmmaker and producer." },
-    Actors: ["Harrison Ford", "Sean Connery", "Alison Doody"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/4ZDkPxWNOqFRBMcBHRplNlXt5KR.jpg",
+    Title: "The Matrix Revolutions",
+    Description: "The human city of Zion defends itself against the massive invasion of the machines as Neo fights to end the war at another front while also opposing the rogue Agent Smith.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Lana Wachowski", Bio: "American filmmaker." },
+    Actors: ["Keanu Reeves", "Laurence Fishburne", "Carrie-Anne Moss"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/ySSBnIKkXqHJFfXBDNblJrJFzqq.jpg",
     Featured: false,
   },
 
-  // ── Jurassic Park ─────────────────────────────────────────────────────────
+  // ── John Wick (All 4) ─────────────────────────────────────────────────────
   {
-    Title: "Jurassic Park",
-    Description:
-      "A pragmatic paleontologist visits a theme park created by a billionaire where cloned dinosaurs roam freely.",
-    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
-    Director: { Name: "Steven Spielberg", Bio: "American filmmaker and producer." },
-    Actors: ["Sam Neill", "Laura Dern", "Jeff Goldblum"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/oU7Oq2kFAAlGqbU4VoAE36g4hoI.jpg",
-    Featured: true,
-  },
-  {
-    Title: "Jurassic World",
-    Description:
-      "A new theme park is built on the original site of Jurassic Park. When the prehistoric creature escapes and wreaks havoc, a former dinosaur trainer steps up.",
-    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
-    Director: { Name: "Colin Trevorrow", Bio: "American filmmaker." },
-    Actors: ["Chris Pratt", "Bryce Dallas Howard", "Vincent D'Onofrio"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/dkMD5qlogeRMiEixC4YNPUvax2T.jpg",
-    Featured: false,
-  },
-
-  // ── The Hunger Games ──────────────────────────────────────────────────────
-  {
-    Title: "The Hunger Games",
-    Description:
-      "Katniss Everdeen voluntarily takes her younger sister's place in the Hunger Games, a televised competition where two teenagers from each district are chosen to fight to the death.",
-    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
-    Director: { Name: "Gary Ross", Bio: "American filmmaker." },
-    Actors: ["Jennifer Lawrence", "Josh Hutcherson", "Liam Hemsworth"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/samTF8sOCCQNqaFcSQiCxTrqkfE.jpg",
-    Featured: false,
-  },
-  {
-    Title: "The Hunger Games: Catching Fire",
-    Description:
-      "After winning the 74th Hunger Games, Katniss Everdeen and Peeta Mellark are forced to compete in a special edition of the Hunger Games.",
-    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
-    Director: { Name: "Francis Lawrence", Bio: "American filmmaker." },
-    Actors: ["Jennifer Lawrence", "Josh Hutcherson", "Philip Seymour Hoffman"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/jTBBUQsOuOtqeymNSYjflkCmHoE.jpg",
-    Featured: false,
-  },
-
-  // ── Alien ─────────────────────────────────────────────────────────────────
-  {
-    Title: "Alien",
-    Description:
-      "After a space merchant vessel receives an unknown transmission as a distress call, one of the crew is attacked by a mysterious life form and they soon realize that its life cycle has merely begun.",
-    Genre: { Name: "Horror", Description: "Films designed to frighten and disturb the audience." },
-    Director: { Name: "Ridley Scott", Bio: "British filmmaker." },
-    Actors: ["Sigourney Weaver", "Tom Skerritt", "John Hurt"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/vfrQk5IPloGg1v9Rzbh2Eg3VGyM.jpg",
-    Featured: true,
-  },
-  {
-    Title: "Aliens",
-    Description:
-      "Fifty-seven years after surviving an apocalyptic attack aboard her space vessel, Ellen Ripley awakens to find that terra-formers on the alien moon have lost contact with Earth.",
+    Title: "John Wick",
+    Description: "An ex-hitman comes out of retirement to track down the gangsters that took everything from him.",
     Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
-    Director: { Name: "James Cameron", Bio: "Canadian filmmaker." },
-    Actors: ["Sigourney Weaver", "Michael Biehn", "Bill Paxton"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/r1x5JGpyqZU8PYhbs4UcrO1Xb6x.jpg",
+    Director: { Name: "Chad Stahelski", Bio: "American stuntman and filmmaker." },
+    Actors: ["Keanu Reeves", "Michael Nyqvist", "Alfie Allen"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/fZPSd91yGE9fCcCe6OoQr6E3Bev.jpg",
+    Featured: true,
+  },
+  {
+    Title: "John Wick: Chapter 2",
+    Description: "After returning to the criminal underworld to repay a debt, John Wick discovers that a large bounty has been put on his life.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Chad Stahelski", Bio: "American stuntman and filmmaker." },
+    Actors: ["Keanu Reeves", "Riccardo Scamarcio", "Ian McShane"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/hXWBc0ioZP3cN4zCu6sqbeFdUCF.jpg",
     Featured: false,
   },
+  {
+    Title: "John Wick: Chapter 3 – Parabellum",
+    Description: "Super-assassin John Wick is on the run after killing a member of the international assassins' guild, and with a $14 million bounty on his head.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Chad Stahelski", Bio: "American stuntman and filmmaker." },
+    Actors: ["Keanu Reeves", "Halle Berry", "Ian McShane"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/ziEuG1essDuWuC5lpWUaw1uXY2O.jpg",
+    Featured: false,
+  },
+  {
+    Title: "John Wick: Chapter 4",
+    Description: "John Wick uncovers a path to defeating the High Table. But before he can earn his freedom, Wick must face off against a new enemy with powerful alliances across the globe.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Chad Stahelski", Bio: "American stuntman and filmmaker." },
+    Actors: ["Keanu Reeves", "Donnie Yen", "Bill Skarsgård"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg",
+    Featured: true,
+  },
 
-  // ── Terminator ────────────────────────────────────────────────────────────
+  // ── Terminator (T1–T2) ────────────────────────────────────────────────────
   {
     Title: "The Terminator",
-    Description:
-      "A human soldier is sent from 2029 to 1984 to stop an almost indestructible cyborg killing machine, sent from the same year, which has been programmed to execute a young woman.",
+    Description: "A human soldier is sent from 2029 to 1984 to stop an almost indestructible cyborg killing machine programmed to execute a young woman whose unborn son is key to humanity's future.",
     Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
     Director: { Name: "James Cameron", Bio: "Canadian filmmaker." },
     Actors: ["Arnold Schwarzenegger", "Linda Hamilton", "Michael Biehn"],
@@ -428,8 +658,7 @@ const movies = [
   },
   {
     Title: "Terminator 2: Judgment Day",
-    Description:
-      "A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her teenage son John from a more advanced and powerful cyborg.",
+    Description: "A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her teenage son John from a more advanced and powerful cyborg.",
     Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
     Director: { Name: "James Cameron", Bio: "Canadian filmmaker." },
     Actors: ["Arnold Schwarzenegger", "Linda Hamilton", "Edward Furlong"],
@@ -437,11 +666,10 @@ const movies = [
     Featured: true,
   },
 
-  // ── Toy Story ─────────────────────────────────────────────────────────────
+  // ── Toy Story (All 4) ──────────────────────────────────────────────────────
   {
     Title: "Toy Story",
-    Description:
-      "A cowboy doll is profoundly threatened and jealous when a new spaceman figure supplants him as top toy in a boy's room.",
+    Description: "A cowboy doll is profoundly threatened and jealous when a new spaceman figure supplants him as top toy in a boy's room.",
     Genre: { Name: "Animation", Description: "Films made using animated characters and worlds." },
     Director: { Name: "John Lasseter", Bio: "American animator and filmmaker." },
     Actors: ["Tom Hanks", "Tim Allen", "Don Rickles"],
@@ -449,129 +677,236 @@ const movies = [
     Featured: false,
   },
   {
+    Title: "Toy Story 2",
+    Description: "When Woody is stolen by a toy collector, Buzz and his friends vow to rescue him, but Woody finds the idea of immortality in a museum tempting.",
+    Genre: { Name: "Animation", Description: "Films made using animated characters and worlds." },
+    Director: { Name: "John Lasseter", Bio: "American animator and filmmaker." },
+    Actors: ["Tom Hanks", "Tim Allen", "Joan Cusack"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/84LHpQYGZj6hYFvCvHZnWS7gR3E.jpg",
+    Featured: false,
+  },
+  {
     Title: "Toy Story 3",
-    Description:
-      "The toys are mistakenly delivered to a day-care center instead of the attic right before Andy leaves for college.",
+    Description: "The toys are mistakenly delivered to a day-care center instead of the attic right before Andy leaves for college.",
     Genre: { Name: "Animation", Description: "Films made using animated characters and worlds." },
     Director: { Name: "Lee Unkrich", Bio: "American filmmaker." },
     Actors: ["Tom Hanks", "Tim Allen", "Joan Cusack"],
     ImagePath: "https://image.tmdb.org/t/p/w500/AbbXspMOwdvwWZgVP0GSuDfRrJm.jpg",
-    Featured: false,
+    Featured: true,
   },
-
-  // ── The Lion King / Disney Classics ──────────────────────────────────────
   {
-    Title: "The Lion King",
-    Description:
-      "Lion prince Simba and his father are targeted by his bitter uncle, who wants to ascend the throne himself.",
+    Title: "Toy Story 4",
+    Description: "When a new toy called 'Forky' joins Woody and the gang, a road trip alongside old and new friends reveals how big the world can be for a toy.",
     Genre: { Name: "Animation", Description: "Films made using animated characters and worlds." },
-    Director: { Name: "Roger Allers", Bio: "American animator and director." },
-    Actors: ["Matthew Broderick", "James Earl Jones", "Jeremy Irons"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg",
-    Featured: true,
-  },
-  {
-    Title: "Up",
-    Description:
-      "78-year-old Carl Fredricksen travels to Paradise Falls in his house equipped with balloons, inadvertently taking a young stowaway.",
-    Genre: { Name: "Animation", Description: "Films made using animated characters and worlds." },
-    Director: { Name: "Pete Docter", Bio: "American filmmaker and animator." },
-    Actors: ["Edward Asner", "Jordan Nagai", "John Ratzenberger"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/psmtPMo69NCRnSMHiOP3jQLvHJe.jpg",
+    Director: { Name: "Josh Cooley", Bio: "American filmmaker and animator." },
+    Actors: ["Tom Hanks", "Tim Allen", "Annie Potts"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg",
     Featured: false,
   },
 
-  // ── Horror Franchises ─────────────────────────────────────────────────────
+  // ── Mission: Impossible ───────────────────────────────────────────────────
   {
-    Title: "It",
-    Description:
-      "In the summer of 1989, a group of bullied kids band together to destroy a shape-shifting monster that exploits the fears and phobias of its victims.",
-    Genre: { Name: "Horror", Description: "Films designed to frighten and disturb the audience." },
-    Director: { Name: "Andy Muschietti", Bio: "Argentine filmmaker." },
-    Actors: ["Bill Skarsgård", "Jaeden Martell", "Finn Wolfhard"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/9E2y5Q7WlCVHRowKjgejhTSPq6p.jpg",
+    Title: "Mission: Impossible",
+    Description: "An American agent, under false suspicion of disloyalty, must discover and expose the real spy without the help of his organization.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Brian De Palma", Bio: "American filmmaker." },
+    Actors: ["Tom Cruise", "Jon Voight", "Emmanuelle Béart"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/6P5NkHsGKbFArTNlzpV8gE7r8Z8.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Mission: Impossible – Ghost Protocol",
+    Description: "The IMF is shut down when it's implicated in the bombing of the Kremlin, causing Ethan Hunt and his new team to go rogue.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Brad Bird", Bio: "American filmmaker and animator." },
+    Actors: ["Tom Cruise", "Jeremy Renner", "Simon Pegg"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/s5V5bCdJMGJLmBLCsECTRJecGPj.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Mission: Impossible – Rogue Nation",
+    Description: "Ethan and his team take on their most impossible mission yet, eradicating the Syndicate — an International rogue organization as highly skilled as the IMF.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Christopher McQuarrie", Bio: "American filmmaker." },
+    Actors: ["Tom Cruise", "Rebecca Ferguson", "Simon Pegg"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/6bFSbOAIcMbcB3mPLn5ItqBhPFM.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Mission: Impossible – Fallout",
+    Description: "Ethan Hunt and his IMF team race against time to prevent a global catastrophe after a mission gone wrong.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Christopher McQuarrie", Bio: "American filmmaker." },
+    Actors: ["Tom Cruise", "Henry Cavill", "Ving Rhames"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/AkJQpZp9WoNdj7pLYSj1L0RcMMN.jpg",
     Featured: true,
-  },
-  {
-    Title: "Get Out",
-    Description:
-      "A young African-American visits his white girlfriend's parents for the weekend, where his simmering uneasiness about their reception grows into dread.",
-    Genre: { Name: "Horror", Description: "Films designed to frighten and disturb the audience." },
-    Director: { Name: "Jordan Peele", Bio: "American comedian and filmmaker." },
-    Actors: ["Daniel Kaluuya", "Allison Williams", "Bradley Whitford"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/tFXcEccSQMf3lfhfXKSU9iRBpa3.jpg",
-    Featured: false,
-  },
-  {
-    Title: "A Quiet Place",
-    Description:
-      "In a post-apocalyptic world, a family is forced to live in near silence while hiding from creatures that hunt by sound.",
-    Genre: { Name: "Horror", Description: "Films designed to frighten and disturb the audience." },
-    Director: { Name: "John Krasinski", Bio: "American actor and filmmaker." },
-    Actors: ["Emily Blunt", "John Krasinski", "Millicent Simmonds"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/nAU74GmpUk7t5iklEp3bufwDq4n.jpg",
-    Featured: false,
   },
 
-  // ── Drama / Oscar Bait ────────────────────────────────────────────────────
+  // ── Jurassic Park / World ─────────────────────────────────────────────────
   {
-    Title: "Forrest Gump",
-    Description:
-      "The presidencies of Kennedy and Johnson, Vietnam, Watergate, and other historical events unfold through the perspective of an Alabama man with an below-average IQ.",
-    Genre: { Name: "Drama", Description: "Character-driven stories exploring the human condition." },
-    Director: { Name: "Robert Zemeckis", Bio: "American filmmaker." },
-    Actors: ["Tom Hanks", "Robin Wright", "Gary Sinise"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/saHP97rTPS5eLmrLQEcANmKrsFl.jpg",
-    Featured: true,
-  },
-  {
-    Title: "Schindler's List",
-    Description:
-      "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.",
-    Genre: { Name: "Drama", Description: "Character-driven stories exploring the human condition." },
+    Title: "Jurassic Park",
+    Description: "A pragmatic paleontologist visits a theme park created by a billionaire where cloned dinosaurs roam freely — until things go terribly wrong.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
     Director: { Name: "Steven Spielberg", Bio: "American filmmaker and producer." },
-    Actors: ["Liam Neeson", "Ralph Fiennes", "Ben Kingsley"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg",
+    Actors: ["Sam Neill", "Laura Dern", "Jeff Goldblum"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/oU7Oq2kFAAlGqbU4VoAE36g4hoI.jpg",
     Featured: true,
   },
   {
-    Title: "Parasite",
-    Description:
-      "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.",
-    Genre: { Name: "Drama", Description: "Character-driven stories exploring the human condition." },
-    Director: { Name: "Bong Joon-ho", Bio: "South Korean filmmaker." },
-    Actors: ["Song Kang-ho", "Lee Sun-kyun", "Cho Yeo-jeong"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
+    Title: "The Lost World: Jurassic Park",
+    Description: "A research team is sent to the Jurassic Park Site B island to study the dinosaurs there while another team approaches with their own agenda.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Steven Spielberg", Bio: "American filmmaker and producer." },
+    Actors: ["Jeff Goldblum", "Julianne Moore", "Pete Postlethwaite"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/gFxtdSPASoG8tBVTBCaFMSPrDM8.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Jurassic World",
+    Description: "A new theme park is built on the original site of Jurassic Park. When a genetically engineered hybrid dinosaur escapes, a former dinosaur trainer must step up.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Colin Trevorrow", Bio: "American filmmaker." },
+    Actors: ["Chris Pratt", "Bryce Dallas Howard", "Vincent D'Onofrio"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/dkMD5qlogeRMiEixC4YNPUvax2T.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Jurassic World: Fallen Kingdom",
+    Description: "When the island's dormant volcano begins roaring to life, Owen and Claire mount a campaign to rescue the remaining dinosaurs from this extinction-level event.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "J.A. Bayona", Bio: "Spanish filmmaker." },
+    Actors: ["Chris Pratt", "Bryce Dallas Howard", "Rafe Spall"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/fgMjGAB3T5V9XFVbOrO7wMakqJN.jpg",
+    Featured: false,
+  },
+
+  // ── James Bond (Craig Era) ────────────────────────────────────────────────
+  {
+    Title: "Casino Royale",
+    Description: "Armed with a licence to kill, secret agent James Bond sets out on his first mission as 007, where he must defeat a private banker funding terrorists.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Martin Campbell", Bio: "New Zealand filmmaker." },
+    Actors: ["Daniel Craig", "Judi Dench", "Eva Green"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/oEQLlqvvZFDOFahYTfzu1d3GPbP.jpg",
     Featured: true,
   },
-
-  // ── Comedy ────────────────────────────────────────────────────────────────
   {
-    Title: "The Grand Budapest Hotel",
-    Description:
-      "A writer encounters the owner of an aging European hotel between the wars and learns of his early years serving as a lobby boy in the hotel's glorious years under an exceptional concierge.",
-    Genre: { Name: "Comedy", Description: "Films intended to entertain and amuse." },
-    Director: { Name: "Wes Anderson", Bio: "American filmmaker." },
-    Actors: ["Ralph Fiennes", "Tony Revolori", "Saoirse Ronan"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/eWdyYQreja6JGCzqHWXpWHDrrPo.jpg",
+    Title: "Quantum of Solace",
+    Description: "James Bond descends into mystery as he tries to stop a mysterious organization from eliminating a country's most valuable resource.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Marc Forster", Bio: "German-Swiss filmmaker." },
+    Actors: ["Daniel Craig", "Olga Kurylenko", "Judi Dench"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/8fLaHMp7cEFd7xWHQY8NtgZrDdv.jpg",
     Featured: false,
   },
   {
-    Title: "Superbad",
-    Description:
-      "Two co-dependent high school seniors are forced to deal with separation anxiety after their plan to stage a booze-soaked party goes awry.",
-    Genre: { Name: "Comedy", Description: "Films intended to entertain and amuse." },
-    Director: { Name: "Greg Mottola", Bio: "American filmmaker." },
-    Actors: ["Jonah Hill", "Michael Cera", "Emma Stone"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/ek8e8txUyUwd2BNqj6lFEerJfbq.jpg",
+    Title: "Skyfall",
+    Description: "Bond's loyalty to M is tested when her past comes back to haunt her, as MI6 comes under attack from a mysterious figure.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Sam Mendes", Bio: "British filmmaker." },
+    Actors: ["Daniel Craig", "Javier Bardem", "Judi Dench"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/xa2fPUMGfPYmQxnFnzJGHMB0UAT.jpg",
+    Featured: true,
+  },
+  {
+    Title: "Spectre",
+    Description: "A cryptic message from Bond's past sends him on a trail to uncover a sinister organization called SPECTRE.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Sam Mendes", Bio: "British filmmaker." },
+    Actors: ["Daniel Craig", "Christoph Waltz", "Léa Seydoux"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/hE24GYddaxB9MVZf1p4QPQYEPgK.jpg",
+    Featured: false,
+  },
+  {
+    Title: "No Time to Die",
+    Description: "Bond has left active service and is enjoying a tranquil life in Jamaica before his old CIA friend Felix Leiter shows up and lures him back into action.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "Cary Joji Fukunaga", Bio: "American filmmaker." },
+    Actors: ["Daniel Craig", "Ana de Armas", "Rami Malek"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/iUgygt3fscRoKWCV1d0C7FbM9TP.jpg",
     Featured: false,
   },
 
-  // ── Original entries preserved ─────────────────────────────────────────────
+  // ── The Alien Saga ────────────────────────────────────────────────────────
+  {
+    Title: "Alien",
+    Description: "After a space merchant vessel receives an unknown transmission as a distress call, one of the crew is attacked by a mysterious life form.",
+    Genre: { Name: "Horror", Description: "Films designed to frighten and disturb the audience." },
+    Director: { Name: "Ridley Scott", Bio: "British filmmaker." },
+    Actors: ["Sigourney Weaver", "Tom Skerritt", "John Hurt"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/vfrQk5IPloGg1v9Rzbh2Eg3VGyM.jpg",
+    Featured: true,
+  },
+  {
+    Title: "Aliens",
+    Description: "Fifty-seven years after surviving an apocalyptic attack aboard her space vessel, Ellen Ripley is sent back to the planet where her crew encountered the hostile alien creatures.",
+    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
+    Director: { Name: "James Cameron", Bio: "Canadian filmmaker." },
+    Actors: ["Sigourney Weaver", "Michael Biehn", "Bill Paxton"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/r1x5JGpyqZU8PYhbs4UcrO1Xb6x.jpg",
+    Featured: true,
+  },
+  {
+    Title: "Prometheus",
+    Description: "Following clues to the origin of mankind, a team travels to the darkest corners of the universe to discover the engineers behind humanity's creation — and a terrifying threat.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Ridley Scott", Bio: "British filmmaker." },
+    Actors: ["Noomi Rapace", "Michael Fassbender", "Charlize Theron"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/qknaaTLdlO0aRQAJXVYJMDjpMBO.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Alien: Covenant",
+    Description: "The crew of the colony ship Covenant, bound for a remote planet on the far side of the galaxy, discovers what they think is an uncharted paradise — but is actually a dark, dangerous world.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Ridley Scott", Bio: "British filmmaker." },
+    Actors: ["Michael Fassbender", "Katherine Waterston", "Billy Crudup"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/soid7GpGlbFEBLm0x9E2q8CijBf.jpg",
+    Featured: false,
+  },
+
+  // ── The Hunger Games (All 4) ──────────────────────────────────────────────
+  {
+    Title: "The Hunger Games",
+    Description: "Katniss Everdeen voluntarily takes her younger sister's place in a televised death match between teenagers from each district of the dystopian nation of Panem.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Gary Ross", Bio: "American filmmaker." },
+    Actors: ["Jennifer Lawrence", "Josh Hutcherson", "Liam Hemsworth"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/samTF8sOCCQNqaFcSQiCxTrqkfE.jpg",
+    Featured: false,
+  },
+  {
+    Title: "The Hunger Games: Catching Fire",
+    Description: "After winning the 74th Hunger Games, Katniss and Peeta are forced into a special edition of the Games featuring past victors.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Francis Lawrence", Bio: "American filmmaker." },
+    Actors: ["Jennifer Lawrence", "Josh Hutcherson", "Philip Seymour Hoffman"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/jTBBUQsOuOtqeymNSYjflkCmHoE.jpg",
+    Featured: false,
+  },
+  {
+    Title: "The Hunger Games: Mockingjay – Part 1",
+    Description: "Katniss Everdeen is in District 13 after she shatters the games forever. Under the leadership of President Coin, Katniss becomes the symbol of rebellion — the Mockingjay.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Francis Lawrence", Bio: "American filmmaker." },
+    Actors: ["Jennifer Lawrence", "Josh Hutcherson", "Liam Hemsworth"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/gSFqnMPADZOz7gUVSSq0qzLhxEf.jpg",
+    Featured: false,
+  },
+  {
+    Title: "The Hunger Games: Mockingjay – Part 2",
+    Description: "As the war of Panem escalates to the destruction of other districts, Katniss Everdeen, the reluctant leader of the rebellion, must bring it all to an end.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Francis Lawrence", Bio: "American filmmaker." },
+    Actors: ["Jennifer Lawrence", "Josh Hutcherson", "Donald Sutherland"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/c1sCIEsiFOLJNfS16FcxQFMqo1X.jpg",
+    Featured: false,
+  },
+
+  // ── Standalone Classics ───────────────────────────────────────────────────
   {
     Title: "The Shawshank Redemption",
-    Description:
-      "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+    Description: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
     Genre: { Name: "Drama", Description: "Character-driven stories exploring the human condition." },
     Director: { Name: "Frank Darabont", Bio: "American filmmaker." },
     Actors: ["Tim Robbins", "Morgan Freeman"],
@@ -580,8 +915,7 @@ const movies = [
   },
   {
     Title: "The Godfather",
-    Description:
-      "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+    Description: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
     Genre: { Name: "Crime", Description: "Films centered on criminal activities and their consequences." },
     Director: { Name: "Francis Ford Coppola", Bio: "American filmmaker." },
     Actors: ["Marlon Brando", "Al Pacino", "James Caan"],
@@ -589,9 +923,17 @@ const movies = [
     Featured: true,
   },
   {
+    Title: "The Godfather Part II",
+    Description: "The early life and career of Vito Corleone in 1920s New York City is portrayed, while his son, Michael, expands and tightens his grip on the family crime syndicate.",
+    Genre: { Name: "Crime", Description: "Films centered on criminal activities and their consequences." },
+    Director: { Name: "Francis Ford Coppola", Bio: "American filmmaker." },
+    Actors: ["Al Pacino", "Robert De Niro", "Diane Keaton"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/hek3koDUyRQk7FIhPXsa6mT2Zc3.jpg",
+    Featured: false,
+  },
+  {
     Title: "Pulp Fiction",
-    Description:
-      "The lives of two mob hitmen, a boxer, a gangster and his wife intertwine in four tales of violence and redemption.",
+    Description: "The lives of two mob hitmen, a boxer, a gangster and his wife intertwine in four tales of violence and redemption.",
     Genre: { Name: "Crime", Description: "Films centered on criminal activities and their consequences." },
     Director: { Name: "Quentin Tarantino", Bio: "American filmmaker." },
     Actors: ["John Travolta", "Samuel L. Jackson", "Uma Thurman"],
@@ -599,9 +941,53 @@ const movies = [
     Featured: true,
   },
   {
+    Title: "Interstellar",
+    Description: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Christopher Nolan", Bio: "British-American filmmaker." },
+    Actors: ["Matthew McConaughey", "Anne Hathaway", "Jessica Chastain"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lZtvFaT71Ae.jpg",
+    Featured: true,
+  },
+  {
+    Title: "Inception",
+    Description: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
+    Director: { Name: "Christopher Nolan", Bio: "British-American filmmaker." },
+    Actors: ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Elliot Page"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
+    Featured: true,
+  },
+  {
+    Title: "Forrest Gump",
+    Description: "The presidencies of Kennedy and Johnson, Vietnam, Watergate, and other historical events unfold through the perspective of an Alabama man with a below-average IQ.",
+    Genre: { Name: "Drama", Description: "Character-driven stories exploring the human condition." },
+    Director: { Name: "Robert Zemeckis", Bio: "American filmmaker." },
+    Actors: ["Tom Hanks", "Robin Wright", "Gary Sinise"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/saHP97rTPS5eLmrLQEcANmKrsFl.jpg",
+    Featured: true,
+  },
+  {
+    Title: "Schindler's List",
+    Description: "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.",
+    Genre: { Name: "Drama", Description: "Character-driven stories exploring the human condition." },
+    Director: { Name: "Steven Spielberg", Bio: "American filmmaker and producer." },
+    Actors: ["Liam Neeson", "Ralph Fiennes", "Ben Kingsley"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg",
+    Featured: true,
+  },
+  {
+    Title: "Parasite",
+    Description: "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.",
+    Genre: { Name: "Drama", Description: "Character-driven stories exploring the human condition." },
+    Director: { Name: "Bong Joon-ho", Bio: "South Korean filmmaker." },
+    Actors: ["Song Kang-ho", "Lee Sun-kyun", "Cho Yeo-jeong"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
+    Featured: true,
+  },
+  {
     Title: "The Silence of the Lambs",
-    Description:
-      "A young FBI cadet must receive the help of an incarcerated and manipulative cannibal killer.",
+    Description: "A young FBI cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer.",
     Genre: { Name: "Thriller", Description: "Suspenseful films designed to keep audiences on edge." },
     Director: { Name: "Jonathan Demme", Bio: "American filmmaker." },
     Actors: ["Jodie Foster", "Anthony Hopkins"],
@@ -609,29 +995,8 @@ const movies = [
     Featured: true,
   },
   {
-    Title: "The Good, the Bad and the Ugly",
-    Description:
-      "A bounty hunting scam joins two men in an uneasy alliance against a third in a race to find a fortune in gold.",
-    Genre: { Name: "Western", Description: "Films set in the American frontier era." },
-    Director: { Name: "Sergio Leone", Bio: "Italian filmmaker." },
-    Actors: ["Clint Eastwood", "Lee Van Cleef", "Eli Wallach"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/bX2xnavhMYjWDoZp1VM6VnU1xwe.jpg",
-    Featured: false,
-  },
-  {
-    Title: "Django Unchained",
-    Description:
-      "With the help of a German bounty-hunter, a freed slave sets out to rescue his wife from a brutal plantation owner.",
-    Genre: { Name: "Western", Description: "Films set in the American frontier era." },
-    Director: { Name: "Quentin Tarantino", Bio: "American filmmaker." },
-    Actors: ["Jamie Foxx", "Christoph Waltz", "Leonardo DiCaprio"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/7oWY8VDWW7thTzWh3OKYRkWAb8X.jpg",
-    Featured: false,
-  },
-  {
     Title: "Gladiator",
-    Description:
-      "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family.",
+    Description: "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.",
     Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
     Director: { Name: "Ridley Scott", Bio: "British filmmaker." },
     Actors: ["Russell Crowe", "Joaquin Phoenix"],
@@ -640,8 +1005,7 @@ const movies = [
   },
   {
     Title: "Fight Club",
-    Description:
-      "An insomniac office worker and a devil-may-care soap maker form an underground fight club.",
+    Description: "An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into something much, much more.",
     Genre: { Name: "Drama", Description: "Character-driven stories exploring the human condition." },
     Director: { Name: "David Fincher", Bio: "American filmmaker." },
     Actors: ["Brad Pitt", "Edward Norton", "Helena Bonham Carter"],
@@ -649,33 +1013,48 @@ const movies = [
     Featured: false,
   },
   {
-    Title: "Interstellar",
-    Description:
-      "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
-    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
-    Director: { Name: "Christopher Nolan", Bio: "British-American filmmaker." },
-    Actors: ["Matthew McConaughey", "Anne Hathaway", "Jessica Chastain"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lZtvFaT71Ae.jpg",
+    Title: "The Good, the Bad and the Ugly",
+    Description: "A bounty hunting scam joins two men in an uneasy alliance against a third in a race to find a fortune in gold buried in a remote cemetery.",
+    Genre: { Name: "Western", Description: "Films set in the American frontier era." },
+    Director: { Name: "Sergio Leone", Bio: "Italian filmmaker." },
+    Actors: ["Clint Eastwood", "Lee Van Cleef", "Eli Wallach"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/bX2xnavhMYjWDoZp1VM6VnU1xwe.jpg",
+    Featured: false,
+  },
+  {
+    Title: "Django Unchained",
+    Description: "With the help of a German bounty-hunter, a freed slave sets out to rescue his wife from a brutal Mississippi plantation owner.",
+    Genre: { Name: "Western", Description: "Films set in the American frontier era." },
+    Director: { Name: "Quentin Tarantino", Bio: "American filmmaker." },
+    Actors: ["Jamie Foxx", "Christoph Waltz", "Leonardo DiCaprio"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/7oWY8VDWW7thTzWh3OKYRkWAb8X.jpg",
+    Featured: false,
+  },
+  {
+    Title: "The Lion King",
+    Description: "Lion prince Simba and his father are targeted by his bitter uncle, who wants to ascend the throne himself.",
+    Genre: { Name: "Animation", Description: "Films made using animated characters and worlds." },
+    Director: { Name: "Roger Allers", Bio: "American animator and director." },
+    Actors: ["Matthew Broderick", "James Earl Jones", "Jeremy Irons"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg",
     Featured: true,
   },
   {
-    Title: "The Martian",
-    Description:
-      "An astronaut becomes stranded on Mars after his team assumes him dead, and must rely on his ingenuity to signal to Earth that he is alive.",
-    Genre: { Name: "Science Fiction", Description: "Speculative fiction exploring futuristic concepts." },
-    Director: { Name: "Ridley Scott", Bio: "British filmmaker." },
-    Actors: ["Matt Damon", "Jessica Chastain", "Kristen Wiig"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/5BHuvQ6p9kfc091Z8RiFNhCwL4b.jpg",
-    Featured: true,
+    Title: "Get Out",
+    Description: "A young African-American visits his white girlfriend's parents for the weekend, where his simmering uneasiness about their reception grows into dread.",
+    Genre: { Name: "Horror", Description: "Films designed to frighten and disturb the audience." },
+    Director: { Name: "Jordan Peele", Bio: "American comedian and filmmaker." },
+    Actors: ["Daniel Kaluuya", "Allison Williams", "Bradley Whitford"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/tFXcEccSQMf3lfhfXKSU9iRBpa3.jpg",
+    Featured: false,
   },
   {
-    Title: "Bullet Train",
-    Description:
-      "Five assassins aboard a fast moving bullet train find out their missions have something in common.",
-    Genre: { Name: "Action", Description: "High-energy films featuring physical feats and heroics." },
-    Director: { Name: "David Leitch", Bio: "American filmmaker." },
-    Actors: ["Brad Pitt", "Joey King", "Aaron Taylor-Johnson"],
-    ImagePath: "https://image.tmdb.org/t/p/w500/j8szC8FgKiDohXcCdlWM8BmBjH0.jpg",
+    Title: "The Grand Budapest Hotel",
+    Description: "A writer encounters the owner of an aging European hotel and learns of his early years serving as a lobby boy in the hotel's glorious years under an exceptional concierge.",
+    Genre: { Name: "Comedy", Description: "Films intended to entertain and amuse." },
+    Director: { Name: "Wes Anderson", Bio: "American filmmaker." },
+    Actors: ["Ralph Fiennes", "Tony Revolori", "Saoirse Ronan"],
+    ImagePath: "https://image.tmdb.org/t/p/w500/eWdyYQreja6JGCzqHWXpWHDrrPo.jpg",
     Featured: false,
   },
 ];
@@ -689,22 +1068,18 @@ async function seedDatabase() {
     console.log(`Upserting ${movies.length} movies (safe to re-run)...`);
 
     let inserted = 0;
-    let updated = 0;
 
     for (const movie of movies) {
-      const result = await Movie.findOneAndUpdate(
+      const existing = await Movie.findOne({ Title: movie.Title });
+      await Movie.findOneAndUpdate(
         { Title: movie.Title },
         { $set: movie },
         { upsert: true, new: true }
       );
-      if (result.__v === undefined || result.isNew) {
-        inserted++;
-      } else {
-        updated++;
-      }
+      if (!existing) inserted++;
     }
 
-    console.log(`Done! Inserted: ${inserted}, Updated/skipped: ${movies.length - inserted}`);
+    console.log(`Done! Inserted ${inserted} new, updated ${movies.length - inserted} existing.`);
 
     await mongoose.connection.close();
     console.log("Database connection closed");
